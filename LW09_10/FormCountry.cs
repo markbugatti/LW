@@ -19,6 +19,13 @@ namespace LW09_10
             InitializeComponent();
         }
 
+        private void save()
+        {
+            this.Validate();
+            this.countryBindingSource.EndEdit();
+            this.tableAdapterManager.UpdateAll(this.dataSet1);
+        }
+
         private void countryBindingNavigatorSaveItem_Click(object sender, EventArgs e)
         {
             this.Validate();
@@ -36,7 +43,7 @@ namespace LW09_10
             foreach (DataColumn item in dataSet1.Country.Columns)
             {
                 string str = item.ColumnName;
-                comboBox1.Items. Add(str);
+                comboBox1.Items.Add(str);
             }
             if (dataSet1.Country.Columns.Count > 0)
             {
@@ -67,9 +74,8 @@ namespace LW09_10
                         dataRow["Id"] = textBox1.Text;
                         dataRow["Name"] = textBox2.Text;
                         dataSet1.Tables["Country"].Rows.Add(dataRow);
-                        countryBindingNavigatorSaveItem_Click(null, null);
-                        formInstruments.Refill();
-                        //formProducer.Refill();
+                        save();
+                        updateAll();
                     }
                     else
                     {
@@ -99,6 +105,8 @@ namespace LW09_10
                         DataRow[] dataRow = dataSet1.Tables["Country"].Select("id = '" + textBox1.Text + " ' ");
                         dataRow[0]["id"] = textBox1.Text;
                         dataRow[0]["Name"] = textBox2.Text;
+                        updateAll();
+                        save();
                     }
                     else
                     {
@@ -114,6 +122,14 @@ namespace LW09_10
             {
                 MessageBox.Show("some of field is empty");
             }          
+        }
+
+        public void updateAll ()
+        {
+            if (formInstruments != null)
+                formInstruments.Refill();
+            if (formProducer != null)
+                formProducer.Refill();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -144,12 +160,15 @@ namespace LW09_10
 
                 sqlCon.Close();
                 showRow(0);
+                save();
+                updateAll();
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.ToString());
                 sqlTransaction.Rollback();
                 sqlCon.Close();
             }
+
         }
 
         private void FormCountry_FormClosing(object sender, FormClosingEventArgs e)

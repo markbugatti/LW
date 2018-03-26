@@ -25,6 +25,13 @@ namespace LW09_10
             this.tableAdapterManager.UpdateAll(this.dataSet1);
         }
 
+        public void save()
+        {
+            this.Validate();
+            this.producerBindingSource.EndEdit();
+            this.tableAdapterManager.UpdateAll(this.dataSet1);
+        }
+
         public void Refill()
         {
             // TODO: This line of code loads data into the 'dataSet1.Instruments' table. You can move, or remove it, as needed.
@@ -33,6 +40,7 @@ namespace LW09_10
             this.countryTableAdapter.Fill(this.dataSet1.Country);
             // TODO: This line of code loads data into the 'dataSet1.Producer' table. You can move, or remove it, as needed.
             this.producerTableAdapter.Fill(this.dataSet1.Producer);
+            save();
         }
 
         private void FormProducer_Load(object sender, EventArgs e)
@@ -43,6 +51,7 @@ namespace LW09_10
                 showRow(0);
             }
             catch { }
+            sqlCon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database1.mdf;Integrated Security=True");
         }
 
         private bool pkExist()
@@ -67,10 +76,44 @@ namespace LW09_10
                         DataRow dataRow = dataSet1.Tables["Producer"].NewRow();
                         dataRow["Id"] = textBox1.Text;
                         dataRow["name"] = textBox2.Text;
-                        DataRow[] rows = dataSet1.Country.Select("name = '" + comboBox1.Text + "'");
-                        dataRow["Country"] = rows[0]["id"];
-                        dataSet1.Tables["Producer"].Rows.Add(dataRow);
-                        producerBindingNavigatorSaveItem_Click(null, null);
+                        DataRow[] rows;
+                        try
+                        {
+                            rows = dataSet1.Country.Select("name = '" + comboBox1.Text + "'");
+                            dataRow["Country"] = rows[0]["id"];
+                            dataSet1.Tables["Producer"].Rows.Add(dataRow);
+                        }
+                        catch
+                        {
+                            // cascade add // найти самый последний элемент взять следующий номер и вставить
+                            try
+                            {
+                                sqlCon.Open();
+                                sqlTransaction = sqlCon.BeginTransaction();
+
+                                string command1 = "insert into country (id, name) values (" + (dataSet1.Country.Rows.Count+1) + ", '" + comboBox1.Text + "')";
+                                SqlCommand sqlCommand1 = new SqlCommand(command1, sqlCon);
+
+                                string command2 = "insert into producer (id, name, country) values (" + textBox1.Text + ", '" + textBox2.Text + "', "+ (dataSet1.Country.Rows.Count+1) + ")";
+                                SqlCommand sqlCommand2 = new SqlCommand(command2, sqlCon);
+                                sqlCommand1.Transaction = sqlTransaction;
+                                sqlCommand2.Transaction = sqlTransaction;
+
+                                sqlCommand1.ExecuteNonQuery();
+                                sqlCommand2.ExecuteNonQuery();
+
+                                sqlTransaction.Commit();
+                                sqlCon.Close();
+                            }
+                            catch (Exception ex)
+                            {
+                                sqlTransaction.Rollback();
+                                sqlCon.Close();
+                                MessageBox.Show("can`t add row: " + ex.Message);
+                            }
+                        }
+                        save();
+                        this.Refill();
                         formInstruments.Refill(); 
                     }
                     else
@@ -102,6 +145,7 @@ namespace LW09_10
                         dataRow[0]["name"] = textBox2.Text;
                         DataRow[] rows = dataSet1.Country.Select("name = '" + comboBox1.Text + "'");
                         dataRow[0]["country"] = rows[0]["id"];
+                        save();
                     }
                     else
                     {
@@ -127,6 +171,7 @@ namespace LW09_10
                 dataSet1.Tables["Producer"].Rows[producerBindingSource.Position].Delete();
             }
             catch { }
+            save();
         }
 
         private void FormProducer_FormClosing(object sender, FormClosingEventArgs e)

@@ -1,4 +1,6 @@
-﻿namespace LW09_10
+﻿using System.Data.SqlClient;
+
+namespace LW09_10
 {
     partial class FormProducer
     {
@@ -100,7 +102,7 @@
             this.producerBindingNavigator.MovePreviousItem = null;
             this.producerBindingNavigator.Name = "producerBindingNavigator";
             this.producerBindingNavigator.PositionItem = null;
-            this.producerBindingNavigator.Size = new System.Drawing.Size(812, 27);
+            this.producerBindingNavigator.Size = new System.Drawing.Size(609, 27);
             this.producerBindingNavigator.TabIndex = 0;
             this.producerBindingNavigator.Text = "bindingNavigator1";
             // 
@@ -123,11 +125,10 @@
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
             this.producerDataGridView.DataSource = this.producerBindingSource;
-            this.producerDataGridView.Location = new System.Drawing.Point(0, 34);
-            this.producerDataGridView.Margin = new System.Windows.Forms.Padding(4);
+            this.producerDataGridView.Location = new System.Drawing.Point(0, 28);
             this.producerDataGridView.Name = "producerDataGridView";
             this.producerDataGridView.ReadOnly = true;
-            this.producerDataGridView.Size = new System.Drawing.Size(465, 271);
+            this.producerDataGridView.Size = new System.Drawing.Size(349, 220);
             this.producerDataGridView.TabIndex = 1;
             this.producerDataGridView.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.producerDataGridView_RowHeaderMouseClick);
             // 
@@ -155,28 +156,25 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(532, 34);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox1.Location = new System.Drawing.Point(399, 28);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(160, 22);
+            this.textBox1.Size = new System.Drawing.Size(121, 20);
             this.textBox1.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(473, 38);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(355, 31);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(19, 17);
+            this.label1.Size = new System.Drawing.Size(16, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Id";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(701, 34);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Location = new System.Drawing.Point(526, 28);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 28);
+            this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 4;
             this.button1.Text = "Add";
             this.button1.UseVisualStyleBackColor = true;
@@ -185,37 +183,33 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(473, 79);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(355, 64);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 17);
+            this.label2.Size = new System.Drawing.Size(33, 13);
             this.label2.TabIndex = 6;
             this.label2.Text = "name";
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(532, 75);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox2.Location = new System.Drawing.Point(399, 61);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(160, 22);
+            this.textBox2.Size = new System.Drawing.Size(121, 20);
             this.textBox2.TabIndex = 5;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(473, 121);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(355, 98);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(55, 17);
+            this.label3.Size = new System.Drawing.Size(42, 13);
             this.label3.TabIndex = 8;
             this.label3.Text = "country";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(701, 75);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Location = new System.Drawing.Point(526, 61);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 28);
+            this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 9;
             this.button2.Text = "Edit";
             this.button2.UseVisualStyleBackColor = true;
@@ -223,10 +217,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(701, 116);
-            this.button3.Margin = new System.Windows.Forms.Padding(4);
+            this.button3.Location = new System.Drawing.Point(526, 94);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(100, 28);
+            this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 10;
             this.button3.Text = "Delete";
             this.button3.UseVisualStyleBackColor = true;
@@ -236,12 +229,10 @@
             // 
             this.comboBox1.DataSource = this.countryBindingSource;
             this.comboBox1.DisplayMember = "Name";
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(532, 116);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBox1.Location = new System.Drawing.Point(399, 94);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(160, 24);
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 11;
             this.comboBox1.ValueMember = "Id";
             // 
@@ -260,9 +251,9 @@
             // 
             // FormProducer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(812, 313);
+            this.ClientSize = new System.Drawing.Size(609, 254);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -274,7 +265,6 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.producerDataGridView);
             this.Controls.Add(this.producerBindingNavigator);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormProducer";
             this.Text = "FormProducer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormProducer_FormClosing);
@@ -317,6 +307,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         public FormInstruments formInstruments;
         public FormCountry formCountry;
-
+        private SqlConnection sqlCon;
+        private SqlCommand sqlCom;
+        private SqlTransaction sqlTransaction;
     }
 }

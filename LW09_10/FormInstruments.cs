@@ -24,17 +24,26 @@ namespace LW09_10
         {
             formCountry = new FormCountry();
             formCountry.formInstruments = this;
-            //if (formCountry != null)
-            //    formProducer.formCountry = formCountry;
-            formCountry.Visible = true;
+            try
+            {
+                if (!formProducer.IsDisposed)
+                    formCountry.formProducer = formProducer;
+            }
+            catch { }
+            formCountry.Show();
         }
 
         private void producerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             formProducer = new FormProducer();
             formProducer.formInstruments = this;
-
-            formProducer.Visible = true;
+            try
+            {
+                if (!formProducer.IsDisposed)
+                    formCountry.formProducer = formProducer;
+            }
+            catch { }
+            formProducer.Show();
         }
 
         private void paramsToolStripMenuItem_Click(object sender, EventArgs e)
